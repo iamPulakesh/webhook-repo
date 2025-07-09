@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GitHub Webhook Event Viewer</title>
+  <title>GitHub Webhook Events</title>
   <style>
     body {
       font-family: sans-serif;
@@ -11,6 +11,7 @@
     }
     h2 {
       color: #333;
+      text-align: center;
     }
     .event {
       background: white;
@@ -23,6 +24,7 @@
   </style>
   <script>
     async function fetchEvents() {
+    // Fetch JSON data from the /webhook/events endpoint
       const res = await fetch("/webhook/events");
       const data = await res.json();
       const container = document.getElementById("events");
@@ -41,7 +43,10 @@
 
         const div = document.createElement("div");
         div.className = "event";
-        div.textContent = message;
+        div.innerHTML = `
+          <div>${message}</div>
+          <div class="id">Request ID: ${event.request_id}</div>
+        `;
         container.appendChild(div);
       });
     }
@@ -53,7 +58,7 @@
 <body>
   <h2>GitHub Repository Events</h2>
   <div id="events">
-    <!-- Events will load here -->
+
   </div>
 </body>
 </html>
