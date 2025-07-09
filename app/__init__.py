@@ -1,7 +1,6 @@
 from flask import Flask
-
-from app.webhook.routes import webhook
 from app.extensions import mongo
+from app.webhook import webhook  # Import Blueprint from webhook package
 
 # Creating our flask app
 def create_app():

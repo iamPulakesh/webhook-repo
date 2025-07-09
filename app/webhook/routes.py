@@ -1,16 +1,16 @@
 from flask import Blueprint, request, jsonify
-from pymongo import MongoClient
 from datetime import datetime
-import os
 from app.extensions import mongo
+from app.webhook import webhook
+from flask import render_template
 
-webhook = Blueprint('Webhook', __name__, url_prefix='/webhook')
-
-events_collection = mongo.db.events
+@webhook.route("/", methods=["GET"])
+def home():
+    return render_template("index.html")
 
 @webhook.route('/events', methods=["GET"])
 def get_events():
-    events = list(events_collection.find({}, {"_id": 0}))
+    events = list(mongo.db.events.find({}, {"_id": 0}))
     return jsonify(events)
 
 
@@ -52,7 +52,7 @@ def receiver():
             }
 
     if record:
-        events_collection.insert_one(record)
+        mongo.db.events.insert_one(record)
         return jsonify({"status": "success", "data": record}), 200
 
     return jsonify({"status": "ignored"}), 204
