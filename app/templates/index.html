@@ -24,6 +24,7 @@
   </style>
   <script>
     async function fetchEvents() {
+      
     // Fetch JSON data from the /webhook/events endpoint
       const res = await fetch("/webhook/events");
       const data = await res.json();

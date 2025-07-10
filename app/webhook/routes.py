@@ -1,8 +1,7 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from datetime import datetime, timezone
 from app.extensions import mongo
 from app.webhook import webhook
-from flask import render_template
 import pytz
 
 @webhook.route("/", methods=["GET"])
