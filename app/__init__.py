@@ -11,6 +11,7 @@ def create_app():
     app.config["MONGO_URI"] = "mongodb://localhost:27017/webhook_db"
     mongo.init_app(app)
 
+    #drop the previous table every time flask restarts
     with app.app_context():
         mongo.db.events.drop()
     
